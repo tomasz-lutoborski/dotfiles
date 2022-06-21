@@ -27,10 +27,11 @@
 from libqtile import bar, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = "kitty"
+app_launcher = "rofi -show run"
+app_switcher = "rofi -show window"
 
 keys = [
     # A list of available commands that can be bound to keys can be found
@@ -71,6 +72,8 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([mod], "d", lazy.spawn(app_launcher), desc="Spawn an app using a rofi"),
+    Key([mod], "s", lazy.spawn(app_switcher), desc="Switch a window using a rofi"),
 ]
 
 groups = [Group(i) for i in "123456789"]
@@ -116,8 +119,8 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
-    fontsize=12,
+    font="CaskaydiaCove Nerd Font",
+    fontsize=14,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
