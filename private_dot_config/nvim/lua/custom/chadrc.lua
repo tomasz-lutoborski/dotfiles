@@ -26,6 +26,13 @@ M.plugins = {
          setup_lspconf = "custom.plugins.lspconfig",
       },
    },
+   override = {
+     ["kyazdani42/nvim-tree.lua"] = {
+       view = {
+         width = 35,
+       },
+     },
+   },
 }
 
 return M
