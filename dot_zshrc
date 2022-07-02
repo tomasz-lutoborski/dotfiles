@@ -111,7 +111,7 @@ eval "$(starship init zsh)"
 
 export EDITOR=nvim
 export SHELL=/usr/bin/zsh
-export PATH=/home/tomek/bin:/home/tomek/.local/bin:$PATH
+export PATH=/home/tomek/.emacs.d/bin:/home/tomek/bin:/home/tomek/.local/bin:$PATH
 export QT_QPA_PLATFORMTHEME=qt5ct
 
 alias dolphin="dolphin -stylesheet /home/tomek/.config/qt/stylesheet"
