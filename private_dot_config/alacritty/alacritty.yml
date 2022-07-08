@@ -46,8 +46,8 @@ window:
   # Blank space added around the window in pixels. This padding is scaled
   # by DPI and the specified value is always added at both opposing sides.
   padding:
-    x: 1
-    y: 1
+    x: 5
+    y: 5
 
   # Spread additional padding evenly around the terminal content.
   #dynamic_padding: false
@@ -120,7 +120,7 @@ font:
     family: JetBrainsMono Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    #style: Regular
+    style: Bold
 
   # Bold font face
   bold:
@@ -139,10 +139,10 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: JetBrainsMono Nerd Font
+    # family: JetBrainsMono Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Italic
+    # style: Regular
 
   # Bold italic font face
   #bold_italic:
@@ -150,10 +150,10 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    family: JetBrainsMono Nerd Font
+    # family: JetBrainsMono Nerd Font
 
     # The `style` can be specified to pick a specific face.
-    style: Bold Italic
+    # style: Bold Italic
 
   # Point size
   size: 10.0

@@ -74,6 +74,7 @@ doom-serif-font (font-spec :family "Roboto Slab" :size 15 :weight 'medium))
 (map! :desc "Move the cursor to the window on the right" :n "C-L" #'evil-window-right)
 (map! :desc "Move the cursor to the window above" :n "C-K" #'evil-window-up)
 (map! :desc "Move the cursor to the window below" :n "C-J" #'evil-window-down)
+(map! :desc "Expand emmet abbreviation" :n "C-E" #'emmet-expand-line)
 ;; To get information about any of these functions/macros, move the cursor over
 ;; the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
 ;; This will open documentation for it, including demos of how they are used.
@@ -82,3 +83,49 @@ doom-serif-font (font-spec :family "Roboto Slab" :size 15 :weight 'medium))
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+
+;; jetbrains ligatures
+(defconst jetbrains-ligature-mode--ligatures
+   '("-->" "//" "/**" "/*" "*/" "<!--" ":=" "->>" "<<-" "->" "<-"
+     "<=>" "==" "!=" "<=" ">=" "=:=" "!==" "&&" "||" "..." ".."
+     "|||" "///" "&&&" "===" "++" "--" "=>" "|>" "<|" "||>" "<||"
+     "|||>" "<|||" ">>" "<<" "::=" "|]" "[|" "{|" "|}"
+     "[<" ">]" ":?>" ":?" "/=" "[||]" "!!" "?:" "?." "::"
+     "+++" "??" "###" "##" ":::" "####" ".?" "?=" "=!=" "<|>"
+     "<:" ":<" ":>" ">:" "<>" "***" ";;" "/==" ".=" ".-" "__"
+     "=/=" "<-<" "<<<" ">>>" "<=<" "<<=" "<==" "<==>" "==>" "=>>"
+     ">=>" ">>=" ">>-" ">-" "<~>" "-<" "-<<" "=<<" "---" "<-|"
+     "<=|" "/\\" "\\/" "|=>" "|~>" "<~~" "<~" "~~" "~~>" "~>"
+     "<$>" "<$" "$>" "<+>" "<+" "+>" "<*>" "<*" "*>" "</>" "</" "/>"
+     "<->" "..<" "~=" "~-" "-~" "~@" "^=" "-|" "_|_" "|-" "||-"
+     "|=" "||=" "#{" "#[" "]#" "#(" "#?" "#_" "#_(" "#:" "#!" "#="
+     "&="))
+
+(sort jetbrains-ligature-mode--ligatures (lambda (x y) (> (length x) (length y))))
+
+(dolist (pat jetbrains-ligature-mode--ligatures)
+  (set-char-table-range composition-function-table
+                      (aref pat 0)
+                      (nconc (char-table-range composition-function-table (aref pat 0))
+                             (list (vector (regexp-quote pat)
+                                           0
+                                    'compose-gstring-for-graphic)))))
+
+;; Copilot config
+;; accept completion from copilot and fallback to company
+(defun my-tab ()
+  (interactive)
+  (or (copilot-accept-completion)
+      (company-indent-or-complete-common nil)))
+
+(use-package! copilot
+  :hook (prog-mode . copilot-mode)
+  :bind (("C-TAB" . 'copilot-accept-completion-by-word)
+         ("C-<tab>" . 'copilot-accept-completion-by-word)
+         :map company-active-map
+         ("<tab>" . 'my-tab)
+         ("TAB" . 'my-tab)
+         :map company-mode-map
+         ("<tab>" . 'my-tab)
+         ("TAB" . 'my-tab)))
